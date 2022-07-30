@@ -5,8 +5,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_version():
-    release_value = os.environ.get('RELEASE')
-    message = 'You are accessing the {version} version of the app! \n'.format(version=release_value)
+    commit_sha = os.environ.get('COMMIT_SHA')
+    if 'COMMIT_SHA' in os.environ:
+        message = 'Hello from the revision of the app built by this commit: {COMMIT_SHA}! \n'.format(commit_sha=commit_sha)
+    else:
+        message = 'Hello - no current info on the commit that built this revision of the app.'
     return(message)
 
 if __name__ == '__main__':
